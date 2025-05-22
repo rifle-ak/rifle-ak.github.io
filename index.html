@@ -3,289 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rifle-AK - Your Digital Frontier</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Rifle-AK // Digital Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-bg: #f8f9fa; /* Light background */
-            --secondary-bg: #ffffff; /* White card background */
-            --text-color: #343a40; /* Dark grey text */
-            --heading-color: #212529; /* Even darker heading */
-            --accent-color: #007bff; /* Primary blue for links/accents */
-            --hover-color: #0056b3; /* Darker blue on hover */
-            --border-color: #e9ecef; /* Light grey border */
-            --shadow-light: rgba(0, 0, 0, 0.05);
-            --shadow-medium: rgba(0, 0, 0, 0.15);
-            --dark-blue-bg: #1a2a4b; /* Darker blue for parallax */
+            --dark-bg-prime: #0a0a0f; /* Deep dark background */
+            --dark-bg-secondary: #16161d; /* Slightly lighter dark for cards */
+            --accent-glow: #00e6ff; /* Neon blue/cyan for glow */
+            --text-light: #e0e0e0; /* Light grey text */
+            --text-muted: #888899; /* Muted grey text */
+            --border-glow: rgba(0, 230, 255, 0.3); /* Lighter glow for borders */
+            --link-prime: #00bfff; /* Deep sky blue for links */
+            --link-hover: #00c7ff; /* Slightly brighter on hover */
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Space Mono', monospace; /* Monospaced for a techy feel */
             margin: 0;
             padding: 0;
-            background-color: var(--primary-bg);
-            color: var(--text-color);
+            background-color: var(--dark-bg-prime);
+            color: var(--text-light);
             line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative; /* For the animated background */
         }
 
-        /* Parallax Container */
-        .parallax-container {
-            position: relative;
-            width: 100%;
-            height: 100vh; /* Full viewport height */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* Important for containing parallax layers */
-            background-color: var(--dark-blue-bg); /* Base background for parallax */
-        }
-
-        .parallax-layer {
-            position: absolute;
+        /* Animated Background Grid/Particles */
+        body::before {
+            content: '';
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
-            will-change: transform; /* Optimize for animation */
+            background: linear-gradient(rgba(0, 230, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0, 230, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2; /* Below moving particles */
+            animation: backgroundFadeIn 2s forwards; /* Subtle fade in */
         }
 
-        /* Example Parallax Layers - Adjust images and positions as needed */
-        .layer-0 {
-            background-image: url('https://via.placeholder.com/1920x1080/2c3e50/ffffff?text=Background+Layer'); /* Dark solid or subtle texture */
-            z-index: 0;
-            /* No transform here, this is the furthest layer */
+        /* Particle/Star effect - More advanced, often done with JS or SVG filters, but we can fake it with CSS here */
+        /* For a truly WOW particle effect, a JS library like particles.js or tsParticles is recommended */
+        .particle-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1; /* Above grid, below content */
+            overflow: hidden;
         }
-        .layer-1 {
-            background-image: url('https://via.placeholder.com/1920x1080/34495e/ffffff?text=Middle+Layer'); /* Slightly lighter */
-            z-index: 1;
-        }
-        .layer-2 {
-            background-image: url('https://via.placeholder.com/1920x1080/5a6b7e/ffffff?text=Foreground+Layer'); /* Even lighter, potentially with subtle elements */
-            z-index: 2;
-        }
-
-        .content-overlay {
-            position: relative; /* Stacks above parallax layers */
-            z-index: 10; /* Ensures content is on top */
-            text-align: center;
-            color: white; /* Ensure text is visible over dark background */
-            padding: 20px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .content-overlay h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 4.5em; /* Larger heading for hero */
-            margin-bottom: 0.1em;
-            letter-spacing: -2px;
-        }
-
-        .content-overlay p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8em;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-
-        .scroll-down {
+        .particle-effect span {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            background-color: var(--accent-glow);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleAnimation 10s infinite ease-out;
+        }
+        /* Create multiple spans with varied sizes, positions, and delays for a denser effect */
+        .particle-effect span:nth-child(1) { width: 3px; height: 3px; left: 10%; top: 20%; animation-delay: 0s; }
+        .particle-effect span:nth-child(2) { width: 2px; height: 2px; left: 30%; top: 70%; animation-delay: 1s; }
+        .particle-effect span:nth-child(3) { width: 4px; height: 4px; left: 50%; top: 40%; animation-delay: 2s; }
+        .particle-effect span:nth-child(4) { width: 2.5px; height: 2.5px; left: 70%; top: 10%; animation-delay: 3s; }
+        .particle-effect span:nth-child(5) { width: 3.5px; height: 3.5px; left: 90%; top: 80%; animation-delay: 4s; }
+        .particle-effect span:nth-child(6) { width: 2px; height: 2px; left: 5%; top: 90%; animation-delay: 5s; }
+        .particle-effect span:nth-child(7) { width: 3px; height: 3px; left: 25%; top: 5%; animation-delay: 6s; }
+        .particle-effect span:nth-child(8) { width: 4px; height: 4px; left: 45%; top: 95%; animation-delay: 7s; }
+        .particle-effect span:nth-child(9) { width: 2.5px; height: 2.5px; left: 65%; top: 30%; animation-delay: 8s; }
+        .particle-effect span:nth-child(10) { width: 3.5px; height: 3.5px; left: 85%; top: 60%; animation-delay: 9s; }
+
+        @keyframes backgroundFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes particleAnimation {
+            0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.5; scale: 1; }
+            70% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(50vw) scale(0.2); opacity: 0; } /* Move up and slight left/right */
+        }
+
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
             color: white;
-            font-size: 1.2em;
+            padding: 20px;
+            background: radial-gradient(circle at center, rgba(0, 230, 255, 0.05) 0%, transparent 70%);
+            /* Glitch effect container */
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-family: 'Major Mono Display', monospace; /* Unique font for glitch */
+            font-size: 5.5em; /* Massive title */
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 0 0 15px rgba(0, 230, 255, 0.5), 0 0 30px rgba(0, 230, 255, 0.3);
+            animation: fadeInScale 1.5s ease-out forwards;
+        }
+
+        /* Glitch effect on hover/load - using JS for activation, CSS for animation */
+        .glitch-text {
+            color: var(--accent-glow);
+            text-shadow:
+                -1px -1px 0px #ff00ff, /* Magenta */
+                1px 1px 0px #00ffff;  /* Cyan */
+            animation: glitch 1.5s infinite linear alternate-reverse; /* More subtle glitch */
+            animation-play-state: paused; /* Start paused, activate with JS */
+            filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.5));
+        }
+
+        .glitch-text.active {
+            animation-play-state: running;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); text-shadow: -1px -1px 0px #ff00ff, 1px 1px 0px #00ffff; }
+            20% { transform: translate(-2px, 2px); text-shadow: 1px -1px 0px #ff00ff, -1px 1px 0px #00ffff; }
+            40% { transform: translate(-2px, -2px); text-shadow: -1px 1px 0px #ff00ff, 1px -1px 0px #00ffff; }
+            60% { transform: translate(2px, 2px); text-shadow: 1px 1px 0px #ff00ff, -1px -1px 0px #00ffff; }
+            80% { transform: translate(2px, -2px); text-shadow: -1px -1px 0px #ff00ff, 1px 1px 0px #00ffff; }
+            100% { transform: translate(0); text-shadow: 1px -1px 0px #ff00ff, -1px 1px 0px #00ffff; }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+
+        .hero-tagline {
+            font-size: 1.6em;
+            color: var(--text-light);
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 0.8s forwards; /* Delayed fade in */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            font-size: 1.8em;
+            color: var(--accent-glow);
             text-decoration: none;
             opacity: 0.7;
+            animation: bounce 2s infinite;
+            text-shadow: 0 0 10px rgba(0, 230, 255, 0.5);
             transition: opacity 0.3s ease;
-            z-index: 15; /* Ensure it's above parallax */
         }
-
-        .scroll-down i {
-            display: block;
-            font-size: 2em;
-            animation: bounce 1.5s infinite;
+        .scroll-indicator:hover {
+            opacity: 1;
+            text-shadow: 0 0 15px var(--accent-glow);
         }
+        .scroll-indicator i { display: block; }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
         }
 
-        /* Main content styling below parallax */
+        /* Main Content Styling */
         .main-content {
-            flex-grow: 1; /* Allows main content to take up remaining space */
-            background-color: var(--primary-bg); /* Matches body background */
-            padding: 50px 0;
-            position: relative; /* For z-indexing if needed */
-            z-index: 5; /* Ensure this is above any potential parallax overflow */
+            flex-grow: 1;
+            background-color: var(--dark-bg-prime);
+            padding: 80px 0; /* More padding */
+            position: relative;
+            z-index: 10; /* Ensures content is above background effects */
         }
 
         .container {
-            background-color: var(--secondary-bg);
-            border-radius: 12px;
-            box-shadow: 0 8px 25px var(--shadow-medium);
-            padding: 50px 40px;
+            background-color: var(--dark-bg-secondary);
+            border-radius: 10px; /* Slightly less rounded */
+            box-shadow: 0 0 25px rgba(0, 230, 255, 0.1), 0 0 50px rgba(0, 230, 255, 0.05); /* Glowy shadow */
+            padding: 60px 50px;
             text-align: center;
-            max-width: 900px; /* Slightly wider */
+            max-width: 950px; /* Wider container */
             width: 90%;
-            margin: 20px auto;
+            margin: 40px auto; /* More margin */
             box-sizing: border-box;
+            border: 1px solid rgba(0, 230, 255, 0.2); /* Thin glow border */
             transform: translateY(0);
-            transition: transform 0.5s ease-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease-in-out, border-color 0.3s ease;
         }
 
         .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px var(--shadow-medium);
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 0 35px rgba(0, 230, 255, 0.2), 0 0 60px rgba(0, 230, 255, 0.1);
+            border-color: rgba(0, 230, 255, 0.5);
         }
 
-        .content-section {
-            margin-bottom: 40px;
-            padding: 20px 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .content-section:first-of-type {
-            border-top: none; /* No top border for the first section */
-        }
-        .content-section:last-of-type {
-             border-bottom: none; /* No bottom border for the last section */
-        }
-
-        .content-section h2 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--heading-color);
-            font-size: 2.2em; /* Slightly larger heading for sections */
-            margin-bottom: 20px;
+        .section-header {
+            font-family: 'Major Mono Display', monospace;
+            color: var(--accent-glow);
+            font-size: 2.8em;
+            margin-bottom: 30px;
             position: relative;
+            text-shadow: 0 0 10px rgba(0, 230, 255, 0.5);
+            animation: slideInLeft 1s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-50px);
         }
 
-        .content-section h2::before {
-            content: '';
-            position: absolute;
-            width: 60px; /* Longer underscore */
-            height: 4px;
-            background-color: var(--accent-color);
-            top: -15px; /* Moved up */
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-            opacity: 0.7;
+        .section-header.active {
+            animation-fill-mode: forwards;
         }
 
-        .content-section p {
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            max-width: 750px;
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .content-block {
+            margin-bottom: 50px; /* More spacing between blocks */
+            padding: 25px 0;
+            border-top: 1px dashed rgba(0, 230, 255, 0.1); /* Dashed border */
+            border-bottom: 1px dashed rgba(0, 230, 255, 0.1);
+        }
+        .content-block:first-of-type { border-top: none; }
+        .content-block:last-of-type { border-bottom: none; }
+
+        .content-block p {
+            font-size: 1.15em;
+            margin-bottom: 18px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            color: var(--text-color);
+            color: var(--text-light);
         }
+        .content-block strong { color: var(--accent-glow); }
 
         .links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Slightly wider buttons */
-            gap: 25px; /* Increased gap */
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-color);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; /* Even more gap */
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 230, 255, 0.2);
         }
 
         .links-grid a {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 18px 25px; /* Larger padding */
-            border-radius: 8px;
+            background-color: var(--link-prime);
+            color: var(--dark-bg-prime); /* Dark text on bright button */
+            padding: 20px 30px;
+            border-radius: 5px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1em;
+            font-weight: 700;
+            font-size: 1.2em;
+            box-shadow: 0 0 15px rgba(0, 230, 255, 0.4);
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 12px var(--shadow-light);
+            position: relative;
+            overflow: hidden; /* For hover glow effect */
         }
 
         .links-grid a:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-5px); /* More pronounced lift */
-            box-shadow: 0 8px 20px var(--shadow-medium);
+            background-color: var(--link-hover);
+            transform: translateY(-10px) scale(1.05); /* More dramatic lift and slight scale */
+            box-shadow: 0 0 25px rgba(0, 230, 255, 0.7), 0 0 40px rgba(0, 230, 255, 0.5);
+        }
+
+        /* Subtle inner glow on hover */
+        .links-grid a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .links-grid a:hover::before {
+            opacity: 1;
         }
 
         .links-grid a i {
-            margin-right: 12px; /* Increased icon margin */
-            font-size: 1.3em;
+            margin-right: 15px;
+            font-size: 1.5em;
+            color: var(--dark-bg-prime);
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
 
         footer {
-            margin-top: 50px;
-            font-size: 0.9em;
-            color: var(--text-color);
-            opacity: 0.8;
-            padding: 20px;
+            margin-top: 80px; /* More space */
+            font-size: 0.85em;
+            color: var(--text-muted);
+            opacity: 0.7;
+            padding: 30px;
             text-align: center;
             width: 100%;
-            background-color: var(--primary-bg); /* Match content background */
+            background-color: var(--dark-bg-secondary); /* Matches card background */
+            border-top: 1px solid rgba(0, 230, 255, 0.1);
         }
 
         /* Responsive adjustments */
         @media (max-width: 992px) {
-            .content-overlay h1 {
-                font-size: 3.5em;
+            .hero-title {
+                font-size: 4em;
             }
-            .content-overlay p {
-                font-size: 1.5em;
+            .hero-tagline {
+                font-size: 1.4em;
+            }
+            .container {
+                padding: 50px 30px;
+            }
+            .section-header {
+                font-size: 2.2em;
             }
         }
 
         @media (max-width: 768px) {
-            .parallax-container {
-                height: 80vh; /* Slightly less height on smaller screens */
+            .hero-title {
+                font-size: 3em;
+                word-break: break-word; /* Prevents overflow */
             }
-            .content-overlay h1 {
-                font-size: 2.8em;
-            }
-            .content-overlay p {
-                font-size: 1.2em;
+            .hero-tagline {
+                font-size: 1.1em;
             }
             .container {
-                padding: 40px 25px;
+                padding: 40px 20px;
             }
-            .content-section h2 {
+            .section-header {
                 font-size: 1.8em;
             }
+            .content-block p {
+                font-size: 1em;
+            }
             .links-grid {
-                grid-template-columns: 1fr; /* Stack links on smaller screens */
+                grid-template-columns: 1fr;
             }
             .links-grid a {
                 padding: 15px 20px;
-                font-size: 1em;
+                font-size: 1.1em;
             }
         }
 
         @media (max-width: 480px) {
-            .parallax-container {
-                height: 70vh; /* Even less height for very small screens */
+            .hero-title {
+                font-size: 2.2em;
             }
-            .content-overlay h1 {
-                font-size: 2em;
-            }
-            .content-overlay p {
-                font-size: 1em;
+            .hero-tagline {
+                font-size: 0.9em;
             }
             .container {
                 padding: 30px 15px;
             }
-            .content-section h2 {
+            .section-header {
+                font-size: 1.5em;
+            }
+            .scroll-indicator {
+                bottom: 20px;
                 font-size: 1.5em;
             }
         }
@@ -293,74 +384,93 @@
 </head>
 <body>
 
-    <div class="parallax-container">
-        <div class="parallax-layer layer-0"></div>
-        <div class="parallax-layer layer-1"></div>
-        <div class="parallax-layer layer-2"></div>
+    <div class="particle-effect">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
 
-        <div class="content-overlay">
-            <h1>Rifle-AK</h1>
-            <p>Innovating. Building. Exploring the Digital Frontier.</p>
-        </div>
+    <div class="hero-section">
+        <h1 class="hero-title"><span class="glitch-text">RIFLE-AK</span></h1>
+        <p class="hero-tagline">Building the Future, One Line of Code at a Time.</p>
 
-        <a href="#main-content-section" class="scroll-down">
+        <a href="#main-content-section" class="scroll-indicator">
             <i class="fas fa-chevron-down"></i>
-            <span class="sr-only">Scroll Down</span> </a>
+        </a>
     </div>
 
     <div id="main-content-section" class="main-content">
         <div class="container">
             <main>
-                <section class="content-section">
-                    <h2>Welcome to My Space</h2>
-                    <p>Hello! I'm rifle-ak, and this is where I share my journey, projects, and insights. This corner of the internet serves as a central point for everything I'm building and learning.</p>
-                    <p>Currently, this site is in its early stages of development. Expect to find a blend of technical explorations, creative endeavors, and personal reflections as it evolves.</p>
-                </section>
+                <h2 class="section-header">Who Am I?</h2>
+                <div class="content-block">
+                    <p>I am rifle-ak, a digital architect passionate about crafting innovative solutions and exploring the ever-evolving landscape of technology. This space is my personal command center, where I document my journey, share my creations, and delve into topics that ignite my curiosity.</p>
+                </div>
 
-                <section class="content-section">
-                    <h2>What You'll Find Here (Soon!)</h2>
-                    <p>My goal is to showcase a diverse range of topics, from coding projects and open-source contributions to articles on technology, personal growth, and perhaps even some creative writing. Stay tuned as I populate this site with valuable content.</p>
-                </section>
+                <h2 class="section-header">What I Do</h2>
+                <div class="content-block">
+                    <p>My expertise spans software development, system design, and exploring cutting-edge technologies. I thrive on challenges, transforming complex ideas into functional, elegant solutions. From robust backend systems to intuitive user interfaces, I'm constantly pushing the boundaries of what's possible.</p>
+                </div>
+
+                <h2 class="section-header">Projects & Insights</h2>
+                <div class="content-block">
+                    <p>This section will soon feature a dynamic showcase of my recent projects, open-source contributions, and in-depth articles. Expect deep dives into code, thoughtful analyses of tech trends, and perhaps even some philosophical musings on the digital age. Check back often for new transmissions!</p>
+                </div>
             </main>
 
             <section class="links-grid">
                 <a href="https://github.com/rifle-ak" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i> GitHub Profile
+                    <i class="fab fa-github"></i> GitHub Matrix
                 </a>
                 <a href="mailto:boss@rifle-ak.dev">
-                    <i class="fas fa-envelope"></i> Email Me
+                    <i class="fas fa-envelope"></i> Secure Channel
                 </a>
                 </section>
         </div>
     </div>
 
     <footer>
-        <p>&copy; <span id="year"></span> rifle-ak. All rights reserved.</p>
+        <p>System Status: Online // &copy; <span id="year"></span> rifle-ak. All Rights Reserved. // Protocol: HTTP/S 1.1</p>
     </footer>
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Parallax Effect (JavaScript)
-        document.addEventListener('DOMContentLoaded', function() {
-            const parallaxContainer = document.querySelector('.parallax-container');
-            const layers = document.querySelectorAll('.parallax-layer');
+        // Glitch effect activation (on scroll into view or on hover)
+        const glitchText = document.querySelector('.glitch-text');
+        const heroSection = document.querySelector('.hero-section');
 
-            parallaxContainer.addEventListener('mousemove', function(e) {
-                const x = (e.clientX - window.innerWidth / 2) / 50; // Adjust divisor for intensity
-                const y = (e.clientY - window.innerHeight / 2) / 50; // Adjust divisor for intensity
-
-                layers.forEach((layer, index) => {
-                    let depth = (index + 1) * 10; // Adjust depth for each layer
-                    layer.style.transform = `translateX(${x * depth * -1}px) translateY(${y * depth * -1}px)`;
-                });
+        // Activate glitch when hero section is visible (on load)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    glitchText.classList.add('active');
+                } else {
+                    glitchText.classList.remove('active');
+                }
             });
+        }, { threshold: 0.5 }); // Trigger when 50% of the element is visible
 
-            // Parallax on scroll (for mobile/tablet fallback or if mousemove is too much)
-            // You can choose one or combine them carefully.
-            // For this design, a subtle mousemove parallax is usually sufficient and engaging.
-            // If you want scroll parallax, consider a library or more complex CSS.
-            // The current setup focuses on a "mouse parallax" effect.
+        observer.observe(heroSection);
+
+        // Optional: Glitch on hover instead of on-load visibility
+        // glitchText.addEventListener('mouseenter', () => glitchText.classList.add('active'));
+        // glitchText.addEventListener('mouseleave', () => glitchText.classList.remove('active'));
+
+
+        // Scroll-triggered animations for content sections
+        const sectionHeaders = document.querySelectorAll('.section-header');
+
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    headerObserver.unobserve(entry.target); // Unobserve once animated
+                }
+            });
+        }, { threshold: 0.6, rootMargin: '0px 0px -50px 0px' }); // Adjust threshold as needed
+
+        sectionHeaders.forEach(header => {
+            headerObserver.observe(header);
         });
     </script>
 </body>
