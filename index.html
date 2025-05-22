@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rifle-AK - Your Personal Corner</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght=400;700&display=swap" rel="stylesheet">
+    <title>Rifle-AK - Your Digital Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-color: #34495e; /* Darker blue-grey */
-            --secondary-color: #ecf0f1; /* Light grey */
-            --accent-color: #e74c3c; /* Reddish orange */
-            --text-color: #2c3e50; /* Even darker blue-grey */
-            --link-color: #2980b9; /* Dodger blue */
-            --background-gradient: linear-gradient(to right, #ece9e6, #ffffff); /* Subtle gradient */
+            --primary-bg: #f8f9fa; /* Light background */
+            --secondary-bg: #ffffff; /* White card background */
+            --text-color: #343a40; /* Dark grey text */
+            --heading-color: #212529; /* Even darker heading */
+            --accent-color: #007bff; /* Primary blue for links/accents */
+            --hover-color: #0056b3; /* Darker blue on hover */
+            --border-color: #e9ecef; /* Light grey border */
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             margin: 0;
             padding: 0;
-            background: var(--background-gradient);
+            background-color: var(--primary-bg);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
@@ -27,82 +31,151 @@
             align-items: center;
             justify-content: center;
             line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll from subtle background */
+        }
+
+        /* Subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #f2f3f4 1px, transparent 1px) 0 0 / 20px 20px;
+            opacity: 0.3;
+            z-index: -1;
         }
 
         .container {
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 40px;
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            padding: 50px 40px;
             text-align: center;
-            max-width: 800px;
+            max-width: 850px;
             width: 90%;
-            margin: 20px auto; /* Add some margin for smaller screens */
-            box-sizing: border-box; /* Include padding in width */
+            margin: 20px auto;
+            box-sizing: border-box;
+            transform: translateY(0);
+            transition: transform 0.5s ease-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px var(--shadow-medium);
         }
 
         header h1 {
             font-family: 'Montserrat', sans-serif;
-            color: var(--primary-color);
-            font-size: 2.8em;
+            color: var(--heading-color);
+            font-size: 3.2em;
             margin-bottom: 15px;
             position: relative;
             display: inline-block;
+            letter-spacing: -1px;
         }
 
         header h1::after {
             content: '';
             position: absolute;
-            width: 60%;
-            height: 4px;
+            width: 80px; /* Shorter, more focused line */
+            height: 5px;
             background-color: var(--accent-color);
-            bottom: -10px;
-            left: 20%;
-            border-radius: 2px;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            opacity: 0.8;
         }
 
         .tagline {
-            font-size: 1.2em;
-            color: var(--primary-color);
-            margin-bottom: 30px;
-            font-style: italic;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4em;
+            color: var(--heading-color);
+            margin-top: 30px; /* Space after underline */
+            margin-bottom: 40px;
+            font-weight: 600;
+            opacity: 0.9;
         }
 
-        .content p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-            max-width: 600px;
+        .content-section {
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .content-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--heading-color);
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .content-section h2::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+
+        .content-section p {
+            font-size: 1.05em;
+            margin-bottom: 15px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            color: var(--text-color);
         }
 
-        .links {
-            margin-top: 30px;
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
 
-        .links a {
-            display: inline-block;
-            background-color: var(--link-color);
+        .links-grid a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-color);
             color: white;
-            padding: 12px 25px;
-            border-radius: 5px;
+            padding: 15px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 1.05em;
-            margin: 0 10px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow-light);
         }
 
-        .links a:hover {
-            background-color: #3498db; /* Lighter blue */
-            transform: translateY(-2px);
+        .links-grid a:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow-medium);
+        }
+
+        .links-grid a i {
+            margin-right: 10px;
+            font-size: 1.2em;
         }
 
         footer {
-            margin-top: 40px;
+            margin-top: 50px;
             font-size: 0.9em;
-            color: var(--primary-color);
+            color: var(--text-color);
+            opacity: 0.8;
             padding: 20px;
             text-align: center;
             width: 100%;
@@ -110,37 +183,52 @@
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+
             header h1 {
-                font-size: 2.2em;
+                font-size: 2.5em;
             }
 
             .tagline {
+                font-size: 1.2em;
+            }
+
+            .content-section h2 {
+                font-size: 1.5em;
+            }
+
+            .content-section p {
                 font-size: 1em;
             }
 
-            .content p {
-                font-size: 1em;
+            .links-grid {
+                grid-template-columns: 1fr; /* Stack links on smaller screens */
             }
 
-            .links a {
-                padding: 10px 20px;
-                font-size: 1em;
-                margin: 5px;
+            .links-grid a {
+                padding: 12px 15px;
             }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 25px;
+                padding: 30px 15px;
             }
 
             header h1 {
-                font-size: 1.8em;
+                font-size: 2em;
             }
 
-            .links a {
-                display: block; /* Stack links vertically */
-                margin-bottom: 10px;
+            header h1::after {
+                width: 60px;
+                height: 4px;
+                bottom: -10px;
+            }
+
+            .tagline {
+                font-size: 1em;
             }
         }
     </style>
@@ -149,22 +237,34 @@
     <div class="container">
         <header>
             <h1>Rifle-AK</h1>
-            <p class="tagline">My little digital space.</p>
+            <p class="tagline">My Digital Hub. Ideas. Projects. Presence.</p>
         </header>
 
-        <main class="content">
-            <p>Welcome to my personal corner on the internet. This site is currently under construction, but it will soon host a variety of projects, thoughts, and resources related to my interests and endeavors.</p>
-            <p>Stay tuned for updates! In the meantime, feel free to connect with me through the links below.</p>
+        <main>
+            <section class="content-section">
+                <h2>Welcome to My Space</h2>
+                <p>Hello! I'm Rifle-AK, and this is where I share my journey, projects, and insights. This corner of the internet serves as a central point for everything I'm building and learning.</p>
+                <p>Currently, this site is in its early stages of development. Expect to find a blend of technical explorations, creative endeavors, and personal reflections as it evolves.</p>
+            </section>
+
+            <section class="content-section">
+                <h2>What You'll Find Here (Soon!)</h2>
+                <p>My goal is to showcase a diverse range of topics, from coding projects and open-source contributions to articles on technology, personal growth, and perhaps even some creative writing. Stay tuned as I populate this site with valuable content.</p>
+            </section>
         </main>
 
-        <section class="links">
-            <a href="https://github.com/rifle-ak" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
-            <a href="mailto:rifle@rifle-ak.is-a-better.dev">Contact Me</a>
+        <section class="links-grid">
+            <a href="https://github.com/rifle-ak" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="mailto:boss@rifle-ak.dev">
+                <i class="fas fa-envelope"></i> Contact Me
+            </a>
             </section>
     </div>
 
     <footer>
-        <p>&copy; <span id="year"></span> Rifle-AK. All rights reserved.</p>
+        <p>&copy; <span id="2025"></span> Rifle-AK. All rights reserved.</p>
     </footer>
 
     <script>
